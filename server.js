@@ -1,22 +1,29 @@
 require('dotenv').config();
 const express = require('express');
-const admin = require('firebase-admin');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getStorage } = require('firebase-admin/storage');
 const firebaseServiceAccountCert = JSON.parse(process.env.FIREBASE_ADMIN_SDK_CERT);
+const buildingMapJson = require('./BuildingMap/buildingmap.json');
 
 //  Express setup
 const app = express();
 const port = process.env.PORT || 5000;
-const server = app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 
-app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/', (req, res) => {
   res.send('Atrium server is running...');
 });
 
-//  Firestore setup
-admin.initializeApp({
-  credential: admin.credential.cert(firebaseServiceAccountCert),
+app.get('/buildingMap', (req, res) => {
+  res.json(buildingMapJson);
 });
-const db = admin.firestore();
+
+//  Firebase Admin setup
+initializeApp({
+  credential: cert(firebaseServiceAccountCert),
+});
+
+// Cloud storage setsup
+// const bucket = getStorage().bucket('gs://atrium-af29c.appspot.com/');
