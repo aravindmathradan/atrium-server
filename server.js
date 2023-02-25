@@ -16,7 +16,7 @@ const structures = require('./routes/structures');
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/', (req, res) => {
-  res.send(req.url);
+  res.send('Atrium server is running...');
 });
 
 app.use('/structures', structures);

@@ -14,7 +14,7 @@ exports.getStructureMap = async (req, res, next) => {
 
 exports.generateSignedUrl = async (req, res, next) => {
   try {
-    const file = bucket.file(`BuildingModels/${req.url}/scene.glb`);
+    const file = bucket.file(`BuildingModels/${req.url.slice(1)}/scene.glb`);
     const options = {
       version: 'v4',
       action: 'read',
