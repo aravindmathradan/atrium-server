@@ -7,9 +7,11 @@ const firebaseServiceAccountCert = JSON.parse(process.env.FIREBASE_ADMIN_SDK_CER
 const app = express();
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+
+app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
-app.get('/status', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Atrium server is running...');
 });
 
