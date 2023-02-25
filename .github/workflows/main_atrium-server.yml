@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'atrium-server'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C77F0614FB149A3A4EB298F4F191DA8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0657D48C6603426FB5EABDAF7A16FB8B }}
           package: .
