@@ -1,29 +1,31 @@
 require('dotenv').config();
 const express = require('express');
-const { initializeApp, cert } = require('firebase-admin/app');
-const { getStorage } = require('firebase-admin/storage');
-const firebaseServiceAccountCert = JSON.parse(process.env.FIREBASE_ADMIN_SDK_CERT);
-const buildingMapJson = require('./BuildingMap/buildingmap.json');
 
 //  Express setup
 const app = express();
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+const server = app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+
+// Middlewares
+const notFound = require('./middlewares/not-found');
+const errorHandler = require('./middlewares/error-handler');
+
+// Routes
+const structures = require('./routes/structures');
 
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/', (req, res) => {
-  res.send('Atrium server is running...');
+  res.send(req.url);
 });
 
-app.get('/buildingMap', (req, res) => {
-  res.json(buildingMapJson);
-});
+app.use('/structures', structures);
 
-//  Firebase Admin setup
-initializeApp({
-  credential: cert(firebaseServiceAccountCert),
-});
+app.use(notFound);
+app.use(errorHandler);
 
-// Cloud storage setsup
-// const bucket = getStorage().bucket('gs://atrium-af29c.appspot.com/');
+// Handling Error
+process.on('unhandledRejection', (err) => {
+  console.error(`An error occurred: ${err.message}`);
+  server.close(() => process.exit(1));
+});

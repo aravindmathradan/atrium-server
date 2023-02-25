@@ -1,0 +1,5 @@
+{
+  "firebaseCloudStorage": {
+    "defaultBucket": "gs://atrium-af29c.appspot.com/"
+  }
+}

@@ -40,10 +40,11 @@ module.exports = {
       'warn',
       'as-needed'
     ],
-    'space-before-function-paren': [
-      'error',
-      'never'
-    ],
+    'space-before-function-paren': ['error', {
+      anonymous: 'always',
+      named: 'always',
+      asyncArrow: 'always',
+    }],
     'comma-dangle': [
       'warn',
       {
