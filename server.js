@@ -12,6 +12,7 @@ const errorHandler = require('./middlewares/error-handler');
 
 // Routes
 const structures = require('./routes/structures');
+const testStructures = require('./routes/test-structures');
 
 app.use(express.json({ limit: '1mb' }));
 
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/structures', structures);
+app.use('/teststructures', testStructures);
 
 app.use(notFound);
 app.use(errorHandler);

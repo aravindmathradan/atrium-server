@@ -26,3 +26,14 @@ exports.generateSignedUrl = async (req, res, next) => {
     throw new CustomAPIError('Failed to generate building url', 401);
   }
 };
+
+exports.getTestStructureMap = async (req, res, next) => {
+  try {
+    const file = bucket.file('BuildingModels/buildingmaptest.json');
+    const [fileContents] = await file.download();
+
+    res.json(JSON.parse(fileContents.toString()));
+  } catch {
+    throw new CustomAPIError('Failed to fetch building map', 404);
+  }
+};
